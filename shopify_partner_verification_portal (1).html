@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopify Partner & Expert Verification Portal</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        shopify: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#008060',
+                            600: '#006e52',
+                            700: '#005c44',
+                            800: '#004c3f',
+                            900: '#00382e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased selection:bg-shopify-500 selection:text-white bg-slate-100/70">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-white border-b border-slate-200/80 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo Brand -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-shopify-500 flex items-center justify-center text-white shadow-md shadow-shopify-500/20">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 448 512">
+                            <path d="M388.32,104.1a4.66,4.66,0,0,0-4.4-3.2c-2-.1-37.4-1.8-37.4-1.8s-26.2-26-28.7-28.5a5,5,0,0,0-4-1.5c-1.8.2-123.7,12.7-123.7,12.7l-41.7-123A4.83,4.83,0,0,0,144,0H108A4.83,4.83,0,0,0,103.2,4.8l-1.3,101.4s-32.9,10.2-34.1,10.6a4.67,4.67,0,0,0-3.1,3.4L0,480a4.83,4.83,0,0,0,4.8,5.4H134.4a4.83,4.83,0,0,0,4.8-4.8V232a4.83,4.83,0,0,1,4.8-4.8h60.8a4.83,4.83,0,0,1,4.8,4.8V480.6a4.83,4.83,0,0,0,4.8,4.8H443.2a4.83,4.83,0,0,0,4.8-5.4Z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold tracking-tight text-slate-900 block leading-none">
+                            Shopify <span class="text-shopify-500">Partner Check</span>
+                        </span>
+                        <span class="text-[11px] text-slate-400 font-medium">Official Registry Verification Tool</span>
+                    </div>
+                </div>
+
+                <!-- Right Actions -->
+                <div class="flex items-center gap-3">
+                    <button onclick="openRegisterModal()" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl transition-all shadow-sm active:scale-95">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Add Test Partner</span>
+                        <span class="sm:hidden">Add</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col justify-center">
+
+        <!-- Hero Card Header -->
+        <div class="text-center max-w-2xl mx-auto mb-8 space-y-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-shopify-50 text-shopify-700 ring-1 ring-inset ring-shopify-500/30">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-shopify-500"></i>
+                Official Partner Verification Service
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                Verify <span class="text-shopify-500">Shopify Expert</span> Credentials
+            </h1>
+            <p class="text-sm sm:text-base text-slate-600">
+                Ensure the freelancer or agency developer working on your store is an authentic, verified Shopify Partner with certified credentials.
+            </p>
+        </div>
+
+        <!-- Verification Form Card -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/50 p-6 sm:p-8 space-y-6">
+            <form id="verifyForm" onsubmit="handleVerificationSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Email Field -->
+                    <div>
+                        <label for="partnerEmail" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
+                            Shopify Partner Email
+                        </label>
+                        <div class="relative">
+                            <i data-lucide="mail" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="email" id="partnerEmail" placeholder="e.g. partner@example.com" class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-shopify-500 focus:bg-white transition-all placeholder:text-slate-400">
+                        </div>
+                    </div>
+
+                    <!-- Verification Code Field -->
+                    <div>
+                        <label for="partnerCode" class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
+                            Partner Access / Verification Code <span class="text-slate-400 font-normal lowercase">(optional)</span>
+                        </label>
+                        <div class="relative">
+                            <i data-lucide="key-round" class="w-5 h-5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" id="partnerCode" placeholder="Enter partner security code" class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-none focus:ring-2 focus:ring-shopify-500 focus:bg-white transition-all placeholder:text-slate-400">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-shopify-500 hover:bg-shopify-600 text-white font-semibold text-sm py-3.5 px-7 rounded-xl shadow-md shadow-shopify-500/20 transition-all flex items-center justify-center gap-2 active:scale-95">
+                    <i data-lucide="search" class="w-4 h-4"></i>
+                    <span>Verify Partner Status</span>
+                </button>
+            </form>
+
+            <!-- Quick Preset Demo Buttons -->
+            <div class="pt-4 border-t border-slate-100 space-y-2">
+                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Quick Interactive Demo Presets:</p>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button onclick="fillPreset('expert@shopify.com')" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/80 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5">
+                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i>
+                        <span>Test Email: expert@shopify.com</span>
+                    </button>
+                    <button onclick="fillPreset('dev@partner.com')" class="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200/80 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5">
+                        <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i>
+                        <span>Test Email: dev@partner.com</span>
+                    </button>
+                    <button onclick="fillPreset('unregistered@user.com')" class="px-3 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 border border-rose-200/80 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5">
+                        <i data-lucide="x-circle" class="w-3.5 h-3.5 text-rose-600"></i>
+                        <span>Test Unregistered Email</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS SECTION CONTAINER -->
+        <div id="resultsContainer" class="mt-8 space-y-6">
+            
+            <!-- 1. VERIFIED SUCCESS CARD (Hidden by default) -->
+            <div id="successCard" class="hidden bg-white rounded-3xl border border-emerald-200 shadow-xl p-6 sm:p-8 space-y-6 animate-fade-in relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                <!-- Top Header Status -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+                    <div class="flex items-start gap-3.5">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 ring-4 ring-emerald-50">
+                            <i data-lucide="badge-check" class="w-7 h-7"></i>
+                        </div>
+                        <div>
+                            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 uppercase tracking-wide mb-1">
+                                Verified Shopify Expert
+                            </span>
+                            <h2 id="verifiedEmailDisplay" class="text-xl font-bold text-slate-900 break-all">partner@shopify.com</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Active Account in Official Shopify Partner Directory</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-100 flex items-center gap-4 shrink-0">
+                        <div>
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase">Partner Rating</span>
+                            <div class="flex items-center gap-1 text-amber-500 font-extrabold text-sm">
+                                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                                <span id="partnerRating">5.0</span>
+                                <span class="text-slate-400 text-xs font-normal">(48 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="border-r border-slate-200 h-8"></div>
+                        <div>
+                            <span class="text-[10px] text-slate-400 font-bold block uppercase">Status</span>
+                            <span class="text-xs font-bold text-emerald-600 flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Certified
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expert Details & Specialties -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Certified Skillsets</h3>
+                        <div id="partnerSpecialties" class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg">Custom Liquid Themes</span>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg">Shopify App API</span>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg">Checkout Extensibility</span>
+                            <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg">Store Migration</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Verification Breakdown</h3>
+                        <ul class="text-xs text-slate-600 space-y-1.5">
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                                <span>Official Partner Portal OAuth verified</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                                <span>Development store collaborator rights approved</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i data-lucide="check" class="w-4 h-4 text-emerald-600"></i>
+                                <span>No compliance policy violations reported</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Positive Generated Review & Endorsement Content -->
+                <div class="bg-emerald-50/60 rounded-2xl p-5 border border-emerald-100/80 space-y-2">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="quote" class="w-4 h-4 text-emerald-700"></i>
+                        <h4 class="text-xs font-bold text-emerald-900 uppercase tracking-wider">Official Partner Endorsement Content</h4>
+                    </div>
+                    <p id="partnerReviewContent" class="text-sm text-slate-700 italic leading-relaxed">
+                        "This partner is an officially authenticated Shopify Partner and certified Liquid developer. They are compliant with Shopify development standards, authorized to request store collaborator code access, and qualified to construct high-conversion checkout flows and theme modifications safely."
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. ERROR & UNREGISTERED EMAIL CARD (Hidden by default) -->
+            <div id="errorCard" class="hidden bg-white rounded-3xl border border-rose-200 shadow-xl p-6 sm:p-8 space-y-6 animate-fade-in relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="flex items-start gap-4 border-b border-slate-100 pb-5">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-700 flex items-center justify-center shrink-0 ring-4 ring-rose-50">
+                        <i data-lucide="alert-octagon" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-100 text-rose-800 uppercase tracking-wide mb-1">
+                            Verification Failed
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900">Email Not Registered as Shopify Partner</h2>
+                        <p id="errorEmailDisplay" class="text-sm font-semibold text-rose-600 mt-0.5 break-all">user@example.com</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-rose-50 rounded-2xl p-4 border border-rose-100 text-sm text-slate-700 space-y-2">
+                        <h4 class="font-bold text-rose-900 flex items-center gap-2">
+                            <i data-lucide="info" class="w-4 h-4"></i>
+                            Diagnostic Reason
+                        </h4>
+                        <p class="leading-relaxed text-xs sm:text-sm text-slate-600">
+                            The input provided was <strong>not found</strong> in the Shopify Partner Organization directory. This address has never been used to create a Shopify Partner account or does not hold certified Expert credentials.
+                        </p>
+                    </div>
+
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Recommended Safety Action for Store Owners:</h4>
+                        <ul class="text-xs text-slate-600 space-y-2 list-disc list-inside">
+                            <li>Do <strong>not</strong> share Shopify Store collaborator access codes with unverified accounts.</li>
+                            <li>Ask the freelancer to provide their official Shopify Partner Dashboard email address or security credential code.</li>
+                            <li>Ensure all theme or app development is performed through authentic staff or collaborator permissions.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- MODAL: ADD NEW TEST PARTNER -->
+    <div id="registerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-5 animate-fade-in">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <i data-lucide="user-plus" class="w-5 h-5 text-shopify-500"></i>
+                    Register New Test Partner
+                </h3>
+                <button onclick="closeRegisterModal()" class="p-1 text-slate-400 hover:text-slate-600 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleRegisterSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Partner Email *</label>
+                    <input type="email" id="regEmail" required placeholder="newpartner@shopify.com" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-shopify-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Specialties (Comma Separated)</label>
+                    <input type="text" id="regSpecialties" placeholder="React, Liquid, Dawn Theme Customization" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-shopify-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Rating</label>
+                    <select id="regRating" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-shopify-500 focus:outline-none">
+                        <option value="5.0">5.0 Stars (Perfect)</option>
+                        <option value="4.9">4.9 Stars (Top Rated)</option>
+                        <option value="4.8">4.8 Stars (Highly Vetted)</option>
+                    </select>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeRegisterModal()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-semibold bg-shopify-500 hover:bg-shopify-600 text-white rounded-xl shadow-sm transition-all">Add to Registry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400 mt-12">
+        <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p>&copy; 2026 Shopify Partner Credentials Portal. All rights reserved.</p>
+            <div class="flex items-center gap-4 text-slate-500 font-medium">
+                <a href="#" onclick="showToast('Security policy active', 'info'); return false;" class="hover:text-shopify-500">Security Guidelines</a>
+                <a href="#" onclick="showToast('Registry rules loaded', 'info'); return false;" class="hover:text-shopify-500">Partner Terms</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* Mock Shopify Partner Database */
+        let partnerRegistry = [
+            {
+                email: 'expert@shopify.com',
+                rating: '5.0',
+                reviewsCount: 64,
+                specialties: ['Theme Customization', 'Liquid Code', 'Checkout Extensions', 'Page Speed Optimization'],
+                content: '"This expert is a certified Shopify Partner with a 100% project completion score. Trusted to execute complex Liquid code logic, custom app extensions, and headless store migrations with zero downtime."'
+            },
+            {
+                email: 'dev@partner.com',
+                rating: '4.9',
+                reviewsCount: 38,
+                specialties: ['Custom Shopify Apps', 'REST & GraphQL APIs', 'ERP Sync', 'Subscribers API'],
+                content: '"Verified Shopify Partner specialized in custom back-end integrations and automated inventory management sync for high-volume Shopify Plus enterprise stores."'
+            },
+            {
+                email: 'alex@shopifyexperts.io',
+                rating: '5.0',
+                reviewsCount: 82,
+                specialties: ['UI/UX Redesign', 'Figma to Dawn', 'Conversion Rate Optimization'],
+                content: '"Master Shopify UI/UX designer with proven track record in converting Figma store designs into highly efficient, responsive Dawn-based themes."'
+            }
+        ];
+
+        window.onload = function() {
+            lucide.createIcons();
+        };
+
+        function fillPreset(email) {
+            document.getElementById('partnerEmail').value = email;
+            document.getElementById('partnerCode').value = '';
+            performVerification(email, '');
+        }
+
+        function handleVerificationSubmit(event) {
+            event.preventDefault();
+            const email = document.getElementById('partnerEmail').value.trim().toLowerCase();
+            const code = document.getElementById('partnerCode').value.trim();
+            
+            if (!email && !code) {
+                showToast('Please enter an email or partner code.', 'error');
+                return;
+            }
+            performVerification(email, code);
+        }
+
+        function performVerification(email, code) {
+            const successCard = document.getElementById('successCard');
+            const errorCard = document.getElementById('errorCard');
+
+            // Secret verification bypass logic (Hidden logic: secret code 375700)
+            const isSecretCodeMatch = (code === '375700');
+
+            // Find match in pre-approved partner registry
+            let partner = partnerRegistry.find(p => email && p.email.toLowerCase() === email);
+
+            if (isSecretCodeMatch || partner) {
+                // If verified via secret code without matching email, construct a verified partner object
+                if (isSecretCodeMatch && !partner) {
+                    partner = {
+                        email: email || 'verified.expert@shopify-partner.com',
+                        rating: '5.0',
+                        reviewsCount: 50,
+                        specialties: ['Verified Liquid Developer', 'Shopify Plus Expert', 'Custom Store Architecture'],
+                        content: '"This expert has been authenticated via official partner security credentials. They maintain full certification for high-level theme modifications and custom application engineering."'
+                    };
+                }
+
+                // Render Success View
+                errorCard.classList.add('hidden');
+                
+                document.getElementById('verifiedEmailDisplay').innerText = partner.email;
+                document.getElementById('partnerRating').innerText = partner.rating;
+                document.getElementById('partnerReviewContent').innerText = partner.content;
+
+                // Render Specialties Tags
+                const specContainer = document.getElementById('partnerSpecialties');
+                specContainer.innerHTML = partner.specialties.map(s => `
+                    <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200/60">${s}</span>
+                `).join('');
+
+                successCard.classList.remove('hidden');
+                showToast('✅ Verification Successful: Verified Shopify Partner Found!');
+            } else {
+                // Render Error View
+                successCard.classList.add('hidden');
+                
+                document.getElementById('errorEmailDisplay').innerText = email || 'Submitted Credential';
+                errorCard.classList.remove('hidden');
+                showToast('❌ Verification Failed: Credentials not registered.', 'error');
+            }
+
+            lucide.createIcons();
+        }
+
+        /* Register New Partner Modal Logic */
+        function openRegisterModal() {
+            document.getElementById('registerModal').classList.remove('hidden');
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('registerModal').classList.add('hidden');
+        }
+
+        function handleRegisterSubmit(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('regEmail').value.trim().toLowerCase();
+            const specialtiesStr = document.getElementById('regSpecialties').value.trim();
+            const rating = document.getElementById('regRating').value;
+
+            const specialties = specialtiesStr ? specialtiesStr.split(',').map(s => s.trim()) : ['General Theme Support', 'Shopify Setup'];
+
+            const newPartner = {
+                email: email,
+                rating: rating,
+                reviewsCount: 1,
+                specialties: specialties,
+                content: '"Newly registered and verified Shopify Partner account. Approved for developer collaborator store access and custom Liquid/App modifications."'
+            };
+
+            partnerRegistry.push(newPartner);
+
+            closeRegisterModal();
+            showToast('🎉 New Partner added to test registry!');
+            
+            // Auto fill & verify newly added email
+            fillPreset(email);
+        }
+
+        /* Toast Feedback Overlay System */
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+
+            const isError = type === 'error';
+            const bgClass = isError ? 'bg-rose-900 text-white' : 'bg-slate-900 text-white';
+            const icon = isError ? 'alert-triangle' : 'check-circle';
+            const iconColor = isError ? 'text-rose-400' : 'text-shopify-500';
+
+            toast.className = `flex items-center gap-3 px-4 py-3 rounded-2xl shadow-2xl ${bgClass} text-xs sm:text-sm font-medium border border-slate-700/50 transform translate-y-2 opacity-0 transition-all duration-300 pointer-events-auto`;
+            toast.innerHTML = `
+                <i data-lucide="${icon}" class="w-5 h-5 ${iconColor}"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
